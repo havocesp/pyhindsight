@@ -168,7 +168,8 @@ class BlinkV8Deserializer:
     def read(self, stream: typing.BinaryIO) -> typing.Any:
         tag = stream.read(1)
 
-        func = {
+
+        if (func := {
             Constants.tag_kMessagePortTag: lambda x: self._not_implemented(x),
             Constants.tag_kMojoHandleTag: lambda x: self._not_implemented(x),
             Constants.tag_kBlobTag: lambda x: self._not_implemented(x),
@@ -202,9 +203,7 @@ class BlinkV8Deserializer:
             Constants.tag_kRTCEncodedVideoFrameTag: lambda x: self._not_implemented(x),
             Constants.tag_kVideoFrameTag: lambda x: self._not_implemented(x),
             Constants.tag_kDOMExceptionTag: lambda x: self._not_implemented(x)
-        }.get(tag)
-
-        if func is None:
+        }.get(tag)) is None:
             raise ValueError(f"Unknown tag: {tag}")
 
         return func(stream)

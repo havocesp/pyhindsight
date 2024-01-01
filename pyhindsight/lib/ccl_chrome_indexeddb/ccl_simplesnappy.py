@@ -70,8 +70,7 @@ def _read_le_varint(stream: typing.BinaryIO) -> typing.Optional[typing.Tuple[int
 
 def read_le_varint(stream: typing.BinaryIO) -> typing.Optional[int]:
     """Convenience version of _read_le_varint that only returns the value or None"""
-    x = _read_le_varint(stream)
-    if x is None:
+    if (x := _read_le_varint(stream)) is None:
         return None
     else:
         return x[0]
@@ -94,8 +93,7 @@ def read_uint32(stream: typing.BinaryIO) -> int:
 
 def read_byte(stream: typing.BinaryIO) -> typing.Optional[int]:
     """Reads a single byte from stream (or returns None if EOD is met)"""
-    x = stream.read(1)
-    if x:
+    if x := stream.read(1):
         return x[0]
 
     return None
@@ -111,8 +109,7 @@ def decompress(data: typing.BinaryIO) -> bytes:
     while True:
         start_offset = data.tell()
         log(f"Reading tag at offset {start_offset}")
-        type_byte = read_byte(data)
-        if type_byte is None:
+        if (type_byte := read_byte(data)) is None:
             break
 
         log(f"Type Byte is {type_byte:02x}")

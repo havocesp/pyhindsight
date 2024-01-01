@@ -35,8 +35,7 @@ def plugin(analysis_session=None):
         if item.interpretation is not None:
             continue
 
-        m = re.search(extension_re, item.url)
-        if m:
+        if m := re.search(extension_re, item.url):
             try:
                 for ext in analysis_session.installed_extensions['data']:
                     if ext.app_id == m.group(2):
@@ -52,8 +51,7 @@ def plugin(analysis_session=None):
         if item.interpretation is not None:
             continue
 
-        m = re.search(extension_re, item.origin)
-        if m:
+        if m := re.search(extension_re, item.origin):
             try:
                 for ext in analysis_session.installed_extensions['data']:
                     if ext.app_id == m.group(2):

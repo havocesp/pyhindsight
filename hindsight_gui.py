@@ -134,8 +134,7 @@ def do_run():
     analysis_session.browser_type = bottle.request.forms.get('browser_type')
     analysis_session.timezone = bottle.request.forms.get('timezone')
     analysis_session.log_path = bottle.request.forms.get('log_path')
-    copy_before_opening = bottle.request.forms.get('copy')
-    if copy_before_opening == 'copy':
+    if (copy_before_opening := bottle.request.forms.get('copy')) == 'copy':
         analysis_session.no_copy = False
     else:
         analysis_session.no_copy = True
@@ -167,8 +166,7 @@ def do_run():
     else:
         analysis_session.available_decrypts['linux'] = 0
 
-    run_status = analysis_session.run()
-    if run_status:
+    if run_status := analysis_session.run():
         analysis_session.run_plugins()
     else:
         print("error :(")

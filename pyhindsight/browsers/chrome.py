@@ -1759,8 +1759,7 @@ class Chrome(WebBrowser):
         index.seek(92 * 4)
 
         for key in range(cacheBlock.tableSize):
-            raw = struct.unpack('I', index.read(4))[0]
-            if raw != 0:
+            if (raw := struct.unpack('I', index.read(4))[0]) != 0:
                 try:
                     entry = CacheEntry(self.profile_path, CacheAddress(raw, path=path), row_type, self.timezone)
                     # Add the new row to the results array
@@ -1827,13 +1826,11 @@ class Chrome(WebBrowser):
         index.seek(92 * 4)
 
         for key in range(cache_block.tableSize):
-            raw = struct.unpack('I', index.read(4))[0]
-            if raw != 0:
+            if (raw := struct.unpack('I', index.read(4))[0]) != 0:
                 try:
                     entry = CacheEntry(self.profile_path, CacheAddress(raw, path=cache_path), row_type, self.timezone)
                     cursor.execute('''SELECT url from Entries WHERE response_id=?''', [entry.key])
-                    index_url = cursor.fetchone()
-                    if index_url:
+                    if index_url := cursor.fetchone():
                         entry.url = index_url['url']
 
                     # Add the new row to the results array
@@ -1846,8 +1843,7 @@ class Chrome(WebBrowser):
                         entry = CacheEntry(self.profile_path, CacheAddress(entry.next, path=cache_path), 
                                            row_type, self.timezone)
                         cursor.execute('''SELECT url FROM Entries WHERE response_id=?''', [entry.key])
-                        index_url = cursor.fetchone()
-                        if index_url:
+                        if index_url := cursor.fetchone():
                             entry.url = index_url['url']
                         results.append(entry)
                 except Exception as e:
@@ -1976,9 +1972,8 @@ class Chrome(WebBrowser):
     @staticmethod
     def get_local_file_info(file_path):
         file_size, magic_results = None, None
-        exists = os.path.isfile(file_path)
 
-        if exists:
+        if exists := os.path.isfile(file_path):
             file_size = os.stat(file_path).st_size
 
         if file_size:
@@ -2174,10 +2169,9 @@ class Chrome(WebBrowser):
                         log.warning(f' - Expected type 1; got type {item["value"].encode()}. Trying to parse anyway.')
                     continue
 
-                raw_proto = item['value']
 
                 # Deleted records won't have a value
-                if raw_proto:
+                if raw_proto := item['value']:
                     # SiteDataProto built from components/performance_manager/persistence/site_data/site_data.proto
                     parsed_proto = SiteDataProto.FromString(raw_proto)
                     last_loaded = parsed_proto.last_loaded
@@ -3043,8 +3037,7 @@ class CacheBlock:
         header = open(filename, 'rb')
 
         # Read Magic Number
-        magic = struct.unpack('I', header.read(4))[0]
-        if magic == CacheBlock.BLOCK_MAGIC:
+        if (magic := struct.unpack('I', header.read(4))[0]) == CacheBlock.BLOCK_MAGIC:
             self.type = CacheBlock.BLOCK
             header.seek(2, 1)
             self.version = struct.unpack('h', header.read(2))[0]

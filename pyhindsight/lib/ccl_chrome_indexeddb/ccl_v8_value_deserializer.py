@@ -338,8 +338,7 @@ class Deserializer:
 
     def _read_tag(self) -> bytes:
         while True:
-            t = self._f.read(1)
-            if t != Constants.token_kPadding:
+            if (t := self._f.read(1)) != Constants.token_kPadding:
                 return t
 
     def _peek_tag(self) -> bytes:
@@ -540,7 +539,8 @@ class Deserializer:
         if tag in Deserializer.__ODDBALLS:
             return tag, Deserializer.__ODDBALLS[tag]
 
-        func = {
+
+        if (func := {
             Constants.token_kTrueObject: lambda: Deserializer.__ODDBALLS[Constants.token_kTrue],
             Constants.token_kFalseObject: lambda: Deserializer.__ODDBALLS[Constants.token_kFalse],
             Constants.token_kNumberObject: self._read_double,
@@ -568,9 +568,7 @@ class Deserializer:
             Constants.token_kWasmModuleTransfer: self._not_implemented,
             Constants.token_kWasmMemoryTransfer: self._not_implemented,
             Constants.token_kHostObject: self._read_host_object,
-        }.get(tag)
-
-        if func is None:
+        }.get(tag)) is None:
             raise ValueError(f"Unknown tag {tag}")
 
         value = func()
@@ -591,8 +589,7 @@ class Deserializer:
         return o
 
     def _read_header(self) -> int:
-        tag = self._read_tag()
-        if tag != Constants.token_kVersion:
+        if (tag := self._read_tag()) != Constants.token_kVersion:
             raise ValueError("Didn't get version tag in the header")
         version = self._read_le_varint()[0]
         return version

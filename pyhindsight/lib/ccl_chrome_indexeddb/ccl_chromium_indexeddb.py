@@ -65,8 +65,7 @@ def _read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False):
 
 
 def read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False):
-    x = _read_le_varint(stream, is_google_32bit=is_google_32bit)
-    if x is None:
+    if (x := _read_le_varint(stream, is_google_32bit=is_google_32bit)) is None:
         return None
     else:
         return x[0]

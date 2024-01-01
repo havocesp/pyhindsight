@@ -63,8 +63,7 @@ def _read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False) -> typing
 
 def read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False) -> typing.Optional[int]:
     """Convenience version of _read_le_varint that only returns the value or None"""
-    x = _read_le_varint(stream, is_google_32bit=is_google_32bit)
-    if x is None:
+    if (x := _read_le_varint(stream, is_google_32bit=is_google_32bit)) is None:
         return None
     else:
         return x[0]
@@ -237,8 +236,7 @@ class LdbFile:
         if len(raw_block) != handle.length or len(trailer) != LdbFile.BLOCK_TRAILER_SIZE:
             raise ValueError(f"Could not read all of the block at offset {handle.offset} in file {self.path}")
 
-        is_compressed = trailer[0] != 0
-        if is_compressed:
+        if is_compressed := trailer[0] != 0:
             with io.BytesIO(raw_block) as buff:
                 raw_block = ccl_simplesnappy.decompress(buff)
 
@@ -418,9 +416,8 @@ class VersionEdit:
 
         with io.BytesIO(buffer) as b:
             while b.tell() < len(buffer) - 1:
-                tag = read_le_varint(b, is_google_32bit=True)
 
-                if tag == VersionEditTag.Comparator:
+                if (tag := read_le_varint(b, is_google_32bit=True)) == VersionEditTag.Comparator:
                     comparator = read_length_prefixed_blob(b).decode("utf-8")
                 elif tag == VersionEditTag.LogNumber:
                     log_number = read_le_varint(b)
