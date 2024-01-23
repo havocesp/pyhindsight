@@ -731,7 +731,7 @@ class Chrome(WebBrowser):
                         self.profile_path, utils.to_datetime(row.get('date_created'), self.timezone),
                         url=row.get('action_url'), name=row.get('username_element'),
                         value=row.get('username_value'), count=row.get('times_used'),
-                        interpretation=f'User chose to save the credentials entered '
+                        interpretation='User chose to save the credentials entered '
                                        f'(times used: {row.get("times_used")})')
                     username_row.row_type = 'login (saved credentials)'
                     results.append(username_row)
@@ -742,7 +742,7 @@ class Chrome(WebBrowser):
                             self.profile_path, utils.to_datetime(row.get('date_last_used'), self.timezone),
                             url=row.get('action_url'), name=row.get('username_element'),
                             value=row.get('username_value'), count=row.get('times_used'),
-                            interpretation=f'User tried to log in with this username (may or may not '
+                            interpretation='User tried to log in with this username (may or may not '
                                            f'have succeeded; times used: {row.get("times_used")})')
                         username_row.row_type = 'login (username)'
                         results.append(username_row)
@@ -791,7 +791,7 @@ class Chrome(WebBrowser):
                         self.profile_path, utils.to_datetime(row.get('update_time'), self.timezone),
                         url=row.get('origin_domain'), name='',
                         value=row.get('username_value'), count=row.get('dismissal_count'),
-                        interpretation=f'User declined to save the password for this site '
+                        interpretation='User declined to save the password for this site '
                                        f'(dismissal count: {row.get("dismissal_count")})')
                     stats_row.row_type = 'login (declined save)'
                     results.append(stats_row)
@@ -970,7 +970,7 @@ class Chrome(WebBrowser):
 
         # Chrome v61+ used leveldb for LocalStorage, but kept old SQLite .localstorage files if upgraded.
         if 'leveldb' in local_storage_listing:
-            log.debug(f' - Found "leveldb" directory; reading Local Storage LevelDB records')
+            log.debug(' - Found "leveldb" directory; reading Local Storage LevelDB records')
             ls_ldb_path = os.path.join(ls_path, 'leveldb')
             ls_ldb_records = utils.get_ldb_records(ls_ldb_path)
             log.debug(f' - Reading {len(ls_ldb_records)} Local Storage raw LevelDB records; beginning parsing')
@@ -1037,7 +1037,7 @@ class Chrome(WebBrowser):
         try:
             ss_ldb_records = ccl_chromium_sessionstorage.SessionStoreDb(pathlib.Path(ss_path))
         except ValueError as e:
-            log.warning(f' - Error reading records; possible LevelDB corruption')
+            log.warning(' - Error reading records; possible LevelDB corruption')
             self.artifacts_counts['Session Storage'] = 'Failed'
 
         if ss_ldb_records:
@@ -1562,7 +1562,7 @@ class Chrome(WebBrowser):
                                             self.profile_path, url=origin,
                                             timestamp=utils.to_datetime(media_playback_time, self.timezone),
                                             key=f'lastMediaPlaybackTime in {preferences_file}.profile.'
-                                                f'content_settings.exceptions.media_engagement]',
+                                                'content_settings.exceptions.media_engagement]',
                                             value=str(pref_data), interpretation='')
                                         engagement_item.row_type += row_type_suffix
                                         timestamped_preference_items.append(engagement_item)
@@ -1572,7 +1572,7 @@ class Chrome(WebBrowser):
                                             self.profile_path, url=origin,
                                             timestamp=utils.to_datetime(engagement_time, self.timezone),
                                             key=f'lastEngagementTime in {preferences_file}.profile.'
-                                                f'content_settings.exceptions.site_engagement]',
+                                                'content_settings.exceptions.site_engagement]',
                                             value=str(pref_data), interpretation='')
                                         engagement_item.row_type += row_type_suffix
                                         timestamped_preference_items.append(engagement_item)

@@ -306,25 +306,25 @@ class LogFile:
 
                     if block_type == LogEntryType.Full:
                         if in_record:
-                            raise ValueError(f"Full block whilst still building a block at offset "
+                            raise ValueError("Full block whilst still building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         in_record = False
                         yield idx * LogFile.LOG_BLOCK_SIZE + buff.tell(), buff.read(length)
                     elif block_type == LogEntryType.First:
                         if in_record:
-                            raise ValueError(f"First block whilst still building a block at offset "
+                            raise ValueError("First block whilst still building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         start_block_offset = idx * LogFile.LOG_BLOCK_SIZE + buff.tell()
                         block = buff.read(length)
                         in_record = True
                     elif block_type == LogEntryType.Middle:
                         if not in_record:
-                            raise ValueError(f"Middle block whilst not building a block at offset "
+                            raise ValueError("Middle block whilst not building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         block += buff.read(length)
                     elif block_type == LogEntryType.Last:
                         if not in_record:
-                            raise ValueError(f"Last block whilst not building a block at offset "
+                            raise ValueError("Last block whilst not building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         block += buff.read(length)
                         in_record = False
@@ -502,25 +502,25 @@ class ManifestFile:
 
                     if block_type == LogEntryType.Full:
                         if in_record:
-                            raise ValueError(f"Full block whilst still building a block at offset "
+                            raise ValueError("Full block whilst still building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         in_record = False
                         yield idx * LogFile.LOG_BLOCK_SIZE + buff.tell(), buff.read(length)
                     elif block_type == LogEntryType.First:
                         if in_record:
-                            raise ValueError(f"First block whilst still building a block at offset "
+                            raise ValueError("First block whilst still building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         start_block_offset = idx * LogFile.LOG_BLOCK_SIZE + buff.tell()
                         block = buff.read(length)
                         in_record = True
                     elif block_type == LogEntryType.Middle:
                         if not in_record:
-                            raise ValueError(f"Middle block whilst not building a block at offset "
+                            raise ValueError("Middle block whilst not building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         block += buff.read(length)
                     elif block_type == LogEntryType.Last:
                         if not in_record:
-                            raise ValueError(f"Last block whilst not building a block at offset "
+                            raise ValueError("Last block whilst not building a block at offset "
                                              f"{idx * LogFile.LOG_BLOCK_SIZE + buff.tell()} in {self.path}")
                         block += buff.read(length)
                         in_record = False
