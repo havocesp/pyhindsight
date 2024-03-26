@@ -465,7 +465,7 @@ class AnalysisSession(object):
             log.warning("No Profile paths found; processing input path as a Profile")
             found_profile_paths = [base_path]
 
-        log.debug("Profile paths: " + str(found_profile_paths))
+        log.debug("Profile paths: %s", str(found_profile_paths))
         return found_profile_paths
 
     def generate_display_version(self):
@@ -496,7 +496,7 @@ class AnalysisSession(object):
         else:
             self.timezone = None
 
-        log.debug("Options: " + str(self.__dict__))
+        log.debug("Options: %s", str(self.__dict__))
 
         # Analysis start time
         log.info("Starting analysis")
@@ -509,7 +509,7 @@ class AnalysisSession(object):
             log.error(fail_message)
             self.fatal_error = fail_message
             return False
-        log.debug("Input directory contents: " + str(input_listing))
+        log.debug("Input directory contents: %s", str(input_listing))
 
         # Search input directory for browser profiles to analyze
         input_profiles = self.find_browser_profiles(self.input_path)
@@ -569,7 +569,7 @@ class AnalysisSession(object):
         return True
 
     def run_plugins(self):
-        log.info("Selected plugins: " + str(self.selected_plugins))
+        log.info("Selected plugins: %s", str(self.selected_plugins))
         completed_plugins = []
 
         for plugin in self.selected_plugins:

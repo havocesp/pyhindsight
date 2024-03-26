@@ -61,13 +61,13 @@ class Brave(Chrome):
         supported_subdirs = ['Local Storage', 'Extensions', 'Cache']
         supported_jsons = ['Bookmarks']  # , 'Preferences']
         supported_items = supported_databases + supported_subdirs + supported_jsons
-        log.debug("Supported items: " + str(supported_items))
+        log.debug("Supported items: %s", str(supported_items))
         input_listing = os.listdir(self.profile_path)
 
         log.info("Found the following supported files or directories:")
         for input_file in input_listing:
             if input_file in supported_items:
-                log.info(" - %s" % input_file)
+                log.info(" - %s", input_file)
 
         # Process History files
         custom_type_re = re.compile(r'__([A-z0-9\._]*)$')

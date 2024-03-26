@@ -267,7 +267,7 @@ def main():
                     # Get list of available plugins and run them
                     plugin_listing = os.listdir(potential_plugin_path)
 
-                    log.debug(" - Contents of plugin folder: " + str(plugin_listing))
+                    log.debug(" - Contents of plugin folder: %s", str(plugin_listing))
                     for plugin in plugin_listing:
                         if plugin[-3:] == ".py" and plugin[0] != '_':
                             plugin = plugin.replace(".py", "")
