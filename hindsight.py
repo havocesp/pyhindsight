@@ -25,7 +25,7 @@ from pyhindsight.utils import banner, format_meta_output, format_plugin_output
 try:
     import pytz
 except ImportError:
-    print(f'Could not import module \'pytz\'; all timestamps in XLSX output '
+    print('Could not import module \'pytz\'; all timestamps in XLSX output '
           f'will be in examiner local time ({time.tzname[time.daylight]}).')
 
 

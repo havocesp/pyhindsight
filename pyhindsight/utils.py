@@ -133,7 +133,7 @@ def to_datetime(timestamp, timezone=None):
                 new_timestamp = datetime.datetime.utcfromtimestamp(timestamp)
             except OSError as e:
                 log.warning(f'Exception parsing {timestamp} to datetime: {e}; '
-                            f'common issue is value is too big for the OS to convert it')
+                            'common issue is value is too big for the OS to convert it')
                 return datetime.datetime.utcfromtimestamp(0)
 
         if timezone is not None:
@@ -195,7 +195,7 @@ def get_ldb_records(ldb_path, prefix=''):
                 cleaned_records.append(cleaned_record)
 
     except ValueError:
-        log.warning(f' - Exception reading LevelDB: ValueError')
+        log.warning(' - Exception reading LevelDB: ValueError')
 
     except Exception as e:
         log.warning(f' - Exception reading LevelDB: {e}')
