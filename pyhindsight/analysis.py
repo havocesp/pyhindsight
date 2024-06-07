@@ -42,10 +42,10 @@ class HindsightEncoder(json.JSONEncoder):
                 value = value.isoformat()
 
             # JSONL requires utf-8 encoding
-            if isinstance(value, bytes) or isinstance(value, bytearray):
+            if isinstance(value, (bytes, bytearray)):
                 value = value.decode('utf-8', errors='replace')
 
-            if isinstance(key, bytes) or isinstance(key, bytearray):
+            if isinstance(key, (bytes, bytearray)):
                 key = key.decode('utf-8', errors='replace')
 
             item[key] = value
